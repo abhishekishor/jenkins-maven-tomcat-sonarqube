@@ -1,12 +1,17 @@
 pipeline {
     
     agent any
-    
-        environment {
+
+        tools {
+            
+            maven 'Maven-Tool'
+            
+        }    
+        // environment {
         
-            PATH = "/var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/Maven-Tool/bin:$PATH"
+        //     PATH = "/var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/Maven-Tool/bin:$PATH"
         
-        }
+        // }
     
     stages {
         
@@ -29,6 +34,25 @@ pipeline {
             }
         }
         
+        stage ("Upload War File") {
+            
+            steps {
+                
+                archiveArtifacts artifacts: '**/*.war'
+                
+                sshagent(['tomcat-server']) {
+                    
+                    sh "scp -o StrictHostKeyChecking=no $WORKSPACE/target/maven-web-application.war ubuntu@54.255.237.208:/opt/tomcat/webapps"
+                    
+                }    
+                
+            }
+            
+        }
+
+
+        
     }
     
 }
+            
