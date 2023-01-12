@@ -56,6 +56,15 @@ pipeline {
                 
                 sshagent(['sonarqube-server']) {
                     
+                    script {
+                        
+                        withSonarQubeEnv(CredentialsId: 'sonarserver') {
+                        
+                        sh "mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=xxxxxxx"
+                        
+                        }
+                        
+                     }
                     
                     
                 }
