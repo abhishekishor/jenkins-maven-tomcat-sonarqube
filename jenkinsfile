@@ -50,7 +50,19 @@ pipeline {
             
         }
 
-
+        stage ("Code Analysis") {
+            
+            steps {
+                
+                sshagent(['sonarqube-server']) {
+                    
+                    
+                    
+                }
+                    
+            }
+                
+        }
         
     }
     
